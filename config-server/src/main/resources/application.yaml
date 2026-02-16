@@ -1,3 +1,19 @@
 spring:
   application:
     name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/IvanBecerra1/config-server-app-project.git
+          search-paths: config-data
+          username: ${GIT_USER}
+          password: ${GIT_PASSWORD}
+
+server:
+  port: 8081
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8760/eureka/
