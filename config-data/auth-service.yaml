@@ -2,6 +2,14 @@
 server:
   port: 9200
 
+application:
+  security:
+    jwt:
+      secret-key: KASLDKASLASKDALSKDALSDKALSDKALSKDALSKDLKASLKDASLDKA
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
+
 spring:
   application:
     name: auth-service
