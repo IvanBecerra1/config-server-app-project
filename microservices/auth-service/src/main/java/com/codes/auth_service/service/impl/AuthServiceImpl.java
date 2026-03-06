@@ -66,6 +66,22 @@ public class AuthServiceImpl {
         return new TokenResponse(jwtToken, tokenRefresh);
     }
 
+    public TokenResponse refreshToken(String header){
+        if (header == null || !header.startsWith("Bearer ") ){
+            throw new IllegalArgumentException("Bearer Invalid (Refresh Token)");
+        }
+
+        String token = header.substring(7);
+        String getMail = this.jwtService.getUsername(token);
+
+
+        if (getMail == null)
+            throw new IllegalArgumentException("Token invalid, refresh token");
+
+
+        return null;
+    }
+
     private void revokeAllUserTokens(User user) {
         List<Token> validUserToken = this.tokenRepository.findAllValidIsFalseOrRevokedIsFalseByUserId(user.getId());
 

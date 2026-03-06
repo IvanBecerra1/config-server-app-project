@@ -1,6 +1,7 @@
 package com.codes.auth_service.service.impl;
 
 import com.codes.auth_service.model.User;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,24 @@ public class JwtService {
         return buildToken(user, refreshExpiration);
     }
 
+    public String getUsername(String token){
+        Claims getPayload = Jwts.parser()
+                .verifyWith(this.getSignInKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return getPayload.getSubject();
+    }
+
+    public Boolean isTokenValid(String token, User userModel){
+        return this.getUsername(token).equals(userModel.getEmail())
+                && !this.tokenExpiration(token);
+    }
+
+    public Boolean tokenExpiration(String token) {
+        return  null;
+    }
     public String buildToken(User user, Long expiration){
         return Jwts.builder().
                 id(user.getId().toString())
